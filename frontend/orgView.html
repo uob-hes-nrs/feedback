@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Feedback Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .form-title {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .question {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            background: #fafafa;
+        }
+
+        .question-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-input {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .attributes {
+            margin-top: 10px;
+        }
+
+        .attribute {
+            margin-bottom: 10px;
+        }
+
+        .add-question-btn, .submit-btn {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 10px 15px;
+            font-size: 14px;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .submit-btn {
+            background: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Custom Feedback Form</h1>
+        <input type="text" id="form-title" class="form-title" placeholder="Enter feedback form title here">
+
+        <div id="questions-container">
+            <!-- Questions will be dynamically added here -->
+        </div>
+
+        <button class="add-question-btn" id="add-question-btn">+ Add Question</button>
+        <button class="submit-btn" id="submit-btn">Submit Feedback Form</button>
+    </div>
+
+    <script>
+        let questionCount = 0;
+
+        const questionsContainer = document.getElementById('questions-container');
+        const addQuestionBtn = document.getElementById('add-question-btn');
+        const submitBtn = document.getElementById('submit-btn');
+
+        // Add new question module
+        addQuestionBtn.addEventListener('click', () => {
+            questionCount++;
+
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            questionDiv.id = `question-${questionCount}`;
+
+            questionDiv.innerHTML = `
+                <div class="question-title">
+                    <input type="text" class="question-input" placeholder="Enter question here">
+                    <button class="delete-btn" onclick="deleteQuestion(${questionCount})">Delete</button>
+                </div>
+                <div class="attributes">
+                    <div class="attribute">
+                        <label>Marks:</label>
+                        <input type="number" class="question-input" placeholder="Marks for this question">
+                    </div>
+                    <div class="attribute">
+                        <label>Description (optional):</label>
+                        <textarea class="question-input" rows="2" placeholder="Enter additional details"></textarea>
+                    </div>
+                </div>
+            `;
+
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        // Delete a question module
+        function deleteQuestion(id) {
+            const questionDiv = document.getElementById(`question-${id}`);
+            if (questionDiv) {
+                questionsContainer.removeChild(questionDiv);
+            }
+        }
+
+        // Handle form submission
+        submitBtn.addEventListener('click', () => {
+            const formTitle = document.getElementById('form-title').value;
+            const questions = document.querySelectorAll('.question');
+            const formData = { title: formTitle, questions: [] };
+
+            questions.forEach((question) => {
+                const questionText = question.querySelector('.question-input').value;
+                const marks = question.querySelector('input[type="number"]').value;
+                const description = question.querySelector('textarea').value;
+
+                formData.questions.push({
+                    text: questionText,
+                    marks: marks,
+                    description: description,
+                });
+            });
+
+            console.log('Feedback Form Data:', formData);
+
+            // Send the data to the server (to be implemented in the backend)
+            alert('Feedback form submitted! Check console for data.');
+        });
+    </script>
+</body>
+</html>
