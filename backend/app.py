@@ -1,10 +1,10 @@
-from flask import Flask, make_response
+from flask import Flask, redirect
 from auth import auth
 
 app = Flask(__name__)
 
 app.register_blueprint(auth)
 
-@app.route("/", methods = ["GET"])
+@app.get("/")
 def root():
-    return "Hello!"
+    return redirect("/login")
