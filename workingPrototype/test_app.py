@@ -1,13 +1,27 @@
-import requests
+import pytest
+from unittest.mock import patch, Mock
 
-BASE_URL = "http://127.0.0.1:8080"
+# Mock Firebase before importing auth_user
+with patch("auth_user.firebase_admin.initialize_app"), patch("auth_user.firestore.client") as mock_firestore_client:
+    from app import *  # Import after mocking
 
-def test_home_route():
-    response = requests.get(f"{BASE_URL}/")
-    assert response.status_code == 200, "Home route did not return 200 OK"
-    assert response.json() == {"message": "Welcome to the prototype backend!"}, "Unexpected response message"
+@pytest.fixture
+def client():
+    app.config['TESTING'] = True
+    app.secret_key = 'test_secret_key'
+    with app.test_client() as client:
+        yield client
 
-if __name__ == "__main__":
-    print("Starting tests for Iteration 1...")
-    test_home_route()
-    print("All tests passed!")
+# Test the index route
+def test_index_route(client):
+    response = client.get('/')
+    assert response.status_code == 200
+    assert b'<title>' in response.data  # Check for common HTML content
+
+# Test the login route with invalid token
+def test_login_failure(client):
+    with patch("auth_user.authenticate_user", return_value=(None, None)):
+        response = client.post('/login', headers={"Authorization": "invalid_token"})
+        assert response.status_code == 403
+        data = response.get_json()
+        assert data["error"] == "Unauthorized"
