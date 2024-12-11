@@ -6,7 +6,7 @@ function all_tests {
 }
 
 function run_test {
-    echo "TESTING NOW: $1"
+    echo "TEST START: $1"
     if .venv/bin/python3 "$1.py"; then
         echo "TEST PASS: $1"
         return 0
@@ -33,15 +33,15 @@ while read line; do
     esac
 done <&3
 if ! $running; then
-    echo "TEST FAIL: app could not start :("
+    echo "REJECT: app could not start :("
     exit 1
 fi
 fail=false
 all_tests
 kill $app
 if $fail; then
-    echo "TEST FAIL: some tests failed :("
+    echo "REJECT: some tests failed :("
     exit 1
 fi
-echo "TEST PASS: all tests passed :)"
+echo "ACCEPT: all tests passed :)"
 exit 0
