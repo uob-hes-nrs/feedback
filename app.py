@@ -5,20 +5,18 @@ import os
 import json
 from dotenv import load_dotenv
 
-FIREBASE_KEY = os.environ["FIREBASE_KEY"]
-
 # Initialize Flask app
 app = Flask(__name__)
 
 app.secret_key = 'CSRStesting10052323434656'  # Set your own unique secret key
 
-# firebase_credentials_json = os.getenv("FIREBASE_KEY")
-# if not firebase_credentials_json:
-#     raise ValueError("FIREBASE_KEY environment variable is not set.")
+firebase_credentials_json = os.getenv("FIREBASE_KEY")
+if not firebase_credentials_json:
+    raise ValueError("FIREBASE_KEY environment variable is not set.")
 
-# firebase_credentials = json.loads(firebase_credentials_json)
+firebase_credentials = json.loads(firebase_credentials_json)
 
-cred = credentials.Certificate(FIREBASE_KEY)
+cred = credentials.Certificate(firebase_credentials)
 
 # Initialize Firebase Admin SDK
 firebase_admin.initialize_app(cred)
