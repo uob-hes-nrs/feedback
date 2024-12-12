@@ -27,6 +27,10 @@ jobs:
           FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
         run: |
           echo "FIREBASE_KEY=${FIREBASE_KEY}" >> .env
+          
+      - name: Print .env content
+        run: cat .env
+
 
       - name: Run application
         run: ./run.sh
