@@ -1,4 +1,4 @@
-backend/.venv/
-backend/__pycache__/
+.venv/
+__pycache__/
 .DS_Store
 FIREBASE_KEY.json
