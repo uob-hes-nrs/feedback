@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,14 +25,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Fetch Firebase secret from GitHub Secrets
-        env:
-          FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
-        run: |
-          echo "FIREBASE_KEY=${FIREBASE_KEY}" >> .env
+      # - name: Fetch Firebase secret from GitHub Secrets
+        
+      #   run: |
+      #     echo "FIREBASE_KEY=${FIREBASE_KEY}" >> .env
           
-      - name: Print .env content
-        run: cat .env
+      # - name: Print .env content
+      #   run: cat .env
 
 
       - name: Run application
