@@ -8,4 +8,9 @@ jobs:
         steps:
         -   uses: actions/checkout@v4
         -   uses: actions/setup-python@v5
-        -   run: ./test.sh
+        -   name: Get FIREBASE_KEY.json
+            run: echo "$FIREBASE_KEY" > FIREBASE_KEY.json
+            env:
+                FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
+        -   name: Run test.sh
+            run: ./test.sh
