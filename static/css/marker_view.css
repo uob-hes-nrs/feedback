@@ -1,0 +1,79 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f9;
+    padding: 20px;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+#form-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.submission-list {
+    margin-bottom: 20px;
+}
+
+.submission-item {
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submission-item:hover {
+    background-color: #f1f1f1;
+}
+
+.question-container {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.question-container label {
+    font-size: 16px;
+    color: #333;
+}
+
+.question-container input,
+.question-container textarea {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.question-container input[type="number"] {
+    max-width: 100px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
